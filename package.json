@@ -1,0 +1,9 @@
+{
+  "name": "jev-judgement-helper",
+  "private": true,
+  "version": "1.0.0",
+  "description": "A zero-dependency local web UI for TypeSafe Jev choices",
+  "scripts": {
+    "start": "node server.cjs"
+  }
+}
