@@ -59,6 +59,11 @@ async function transcribeAudio(file) {
     if (!result.text) throw new Error('音频中没有识别到可用语音。');
     return result;
   } catch (error) {
+    if (error.stdout) {
+      let result;
+      try { result = JSON.parse(String(error.stdout).trim()); } catch { result = null; }
+      if (result?.error) throw new Error(result.error);
+    }
     if (error.code === 'ENOENT') throw new Error(`找不到本地语音转写环境：${pythonExecutable}`);
     throw error;
   } finally {
@@ -290,7 +295,8 @@ async function decide(req, res) {
       : { source: 'text', analysis_model: 'jev-latest' };
     sendJson(res, 200, data);
   } catch (error) {
-    sendJson(res, 500, { error: error.message || '服务器错误。' });
+    const isTranscriptionError = /语音转写|faster-whisper|音频中没有|本地语音转写/.test(String(error.message || ''));
+    sendJson(res, isTranscriptionError ? 503 : 500, { error: error.message || '服务器错误。' });
   }
 }
 
