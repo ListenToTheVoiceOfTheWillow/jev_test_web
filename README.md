@@ -4,7 +4,7 @@
 
 也可以输入音频。音频会先交给本机的 faster-whisper 转写，转写文本再发送给 Jev 大模型；原始音频不会上传到 TypeSafe。结果页会显示“音频 → 本机 Whisper 转写 → Jev 大模型判断”的实际链路。默认使用 `E:\secondsoft\myclaudeenv\venv` 中的 Python 和 tiny 模型缓存。
 
-每位同事都可以在自己的电脑上运行，并在本地 `.env` 文件中填写自己的 Jev API key。项目不需要安装 Jev Skill，也不需要执行 `npm install`。
+每位同事都可以在自己的电脑上运行，并在本地 `.env` 文件中填写自己的 Jev API key。仓库中的 `.env` 只包含占位值，项目不需要安装 Jev Skill，也不需要执行 `npm install`。
 
 ## 一、准备环境
 
@@ -23,13 +23,14 @@ node --version
 ## 二、配置自己的 Jev key
 
 1. 将整个项目文件夹复制到自己的电脑。
-2. 用记事本打开 `.env`，填入自己的 key：
+2. 如果项目目录中没有 `.env`，复制 `.env.example` 文件并将副本改名为 `.env`。
+3. 用记事本打开 `.env`，填入自己的 key：
 
    ```env
    TYPESAFE_API_KEY=你的Jev_API_key
    ```
 
-不要把 key 填到网页输入框，也不要把 `.env` 文件发给其他人或提交到公共代码仓库。
+不要把 key 填到网页输入框，也不要把填入真实 key 后的 `.env` 再提交或推送到 GitHub。仓库里的 `.env` 只是为了让首次配置更简单，里面没有可用的真实 key。
 
 ## 三、启动程序
 
