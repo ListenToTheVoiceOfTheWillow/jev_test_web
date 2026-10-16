@@ -1,20 +1,22 @@
 @echo off
 setlocal
 cd /d "%~dp0"
+
 where node >nul 2>nul
-if %errorlevel%==0 (
+if not errorlevel 1 (
   set "NODE_CMD=node"
 ) else if exist "E:\secondsoft\myclaudeenv\nodejs\node.exe" (
   set "NODE_CMD=E:\secondsoft\myclaudeenv\nodejs\node.exe"
 ) else (
-  echo 未找到 Node.js。
-  echo 请先安装 Node.js 18 或更高版本，然后再次运行此文件。
+  echo Node.js was not found.
+  echo Please install Node.js 18 or newer, then run this file again.
   pause
   exit /b 1
 )
-start "Jev Server" /min "%NODE_CMD%" server.cjs
-timeout /t 1 /nobreak >nul
+
+start "Jev Server" /min "%NODE_CMD%" "%~dp0server.cjs"
+ping 127.0.0.1 -n 2 >nul
 start "" "http://127.0.0.1:8787/"
-echo Jev 判断助手已启动：http://127.0.0.1:8787/
-echo 关闭服务请在任务管理器中结束 node.exe，或关闭已打开的服务器窗口。
+echo Jev server started: http://127.0.0.1:8787/
+echo If the browser did not open, copy the address above into your browser.
 endlocal
